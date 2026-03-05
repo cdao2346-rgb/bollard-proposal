@@ -5,814 +5,571 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bollard Installation Proposal - 916 Black Locust</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        
+        /* 1. DESIGN TOKENS */
         :root {
-            --teal: #00504d;
-            --teal-dark: #003d3a;
-            --teal-light: #006b67;
-            --teal-muted: #e6f0ef;
-            --cream: #f5f1e8;
-            --slate-50: #f8fafc;
-            --slate-100: #f1f5f9;
-            --slate-200: #e2e8f0;
-            --slate-400: #94a3b8;
-            --slate-500: #64748b;
-            --slate-600: #475569;
-            --slate-700: #334155;
-            --slate-800: #1e293b;
-            --slate-900: #0f172a;
-            --amber-50: #fffbeb;
-            --amber-200: #fde68a;
-            --amber-800: #92400e;
-            --amber-900: #78350f;
-            --radius: 10px;
-            --radius-lg: 14px;
+            --kh-teal: #00504d;
+            --kh-teal-dark: #003d3a;
+            --kh-brick: #f5f1e8;
+            --kh-accent: #10b981;
+            --kh-bg: #f1f5f9;
+            --kh-white: #ffffff;
+            --kh-slate-50: #f8fafc;
+            --kh-slate-100: #f1f5f9;
+            --kh-slate-200: #e2e8f0;
+            --kh-slate-400: #94a3b8;
+            --kh-slate-500: #64748b;
+            --kh-slate-600: #475569;
+            --kh-slate-700: #334155;
+            --kh-slate-900: #0f172a;
+            
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            
+            --space-xs: 0.5rem;
+            --space-sm: 1rem;
+            --space-md: 1.5rem;
+            --space-lg: 2rem;
+
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+
+            --container-width: 800px;
+            --tap-target: 48px;
         }
 
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
+        /* 2. BASE RESET */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
-            font-family: 'DM Sans', sans-serif;
-            background: var(--slate-100);
-            color: var(--slate-800);
-            padding: 0.75rem;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--kh-bg);
+            color: var(--kh-slate-700);
+            line-height: 1.5;
+            padding: var(--space-sm) 0;
+        }
+
+        /* 3. LAYOUT COMPONENTS */
+        .proposal-container {
+            background-color: var(--kh-brick);
+            width: 95%;
+            max-width: var(--container-width);
+            margin: 0 auto;
+            box-shadow: var(--shadow-md);
+            border-radius: var(--radius-md);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
             min-height: 100vh;
         }
 
-        @media (min-width: 768px) { body { padding: 2rem; } }
+        /* 4. HEADER (Responsive Stacking) */
+        .header {
+            background-color: var(--kh-teal);
+            color: var(--kh-white);
+            padding: var(--space-md);
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-sm);
+            text-align: center;
+        }
 
-        /* ── CONTAINER ── */
-        .proposal {
-            background: var(--cream);
-            max-width: 1040px;
-            margin: 0 auto;
-            border-radius: var(--radius-lg);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.10), 0 2px 8px rgba(0,0,0,0.06);
+        .header-brand {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--space-xs);
+        }
+
+        .header-title h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .header-subtitle {
+            font-size: 0.875rem;
+            opacity: 0.9;
+        }
+
+        .header-lead {
+            padding-top: var(--space-sm);
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .lead-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--kh-slate-400);
+            font-weight: 700;
+        }
+
+        .lead-name {
+            font-size: 1.125rem;
+            font-weight: 600;
+        }
+
+        /* 5. ACCORDION STYLING */
+        .main-content {
+            padding: var(--space-sm);
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-sm);
+        }
+
+        details {
+            background: var(--kh-white);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--kh-slate-200);
+            box-shadow: var(--shadow-sm);
             overflow: hidden;
         }
 
-        /* ── HEADER ── */
-        .header {
-            background: var(--teal);
-            color: white;
-            padding: 1.25rem 1.25rem 1.25rem 1.25rem;
+        summary {
+            list-style: none;
+            padding: var(--space-sm) var(--space-md);
+            cursor: pointer;
+            font-weight: 700;
+            color: var(--kh-slate-700);
             display: flex;
-            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            min-height: var(--tap-target);
+            user-select: none;
+            transition: background-color 0.2s;
+        }
+
+        summary:hover {
+            background-color: var(--kh-slate-50);
+        }
+
+        summary::-webkit-details-marker { display: none; }
+
+        .summary-label {
+            display: flex;
+            align-items: center;
             gap: 0.75rem;
         }
 
+        .summary-label i {
+            color: var(--kh-slate-400);
+            width: 20px;
+            text-align: center;
+        }
+
+        .summary-chevron {
+            font-size: 0.75rem;
+            color: var(--kh-slate-400);
+            transition: transform 0.3s;
+        }
+
+        details[open] .summary-chevron {
+            transform: rotate(180deg);
+        }
+
+        .details-content {
+            padding: var(--space-md);
+            border-top: 1px solid var(--kh-slate-100);
+            background: var(--kh-white);
+        }
+
+        /* 6. CONTENT MODULES */
+        
+        /* Models Grid */
+        .models-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--space-sm);
+        }
+
+        .model-card {
+            background: var(--kh-white);
+            padding: var(--space-md);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--kh-slate-100);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .model-tag { font-size: 9px; font-weight: 700; color: var(--kh-teal); text-transform: uppercase; margin-bottom: 4px; }
+        .model-name { font-size: 1rem; font-weight: 700; color: var(--kh-slate-900); }
+        .model-sku { font-family: monospace; font-size: 10px; color: var(--kh-slate-400); margin-bottom: 12px; }
+        .model-description { font-size: 11px; color: var(--kh-slate-500); margin-bottom: 1rem; flex-grow: 1; }
+        .model-price { font-size: 1.125rem; font-weight: 700; color: var(--kh-slate-900); margin-bottom: 1rem; }
+
+        .btn-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 40px;
+            border: 1px solid var(--kh-teal);
+            border-radius: var(--radius-sm);
+            color: var(--kh-teal);
+            text-decoration: none;
+            font-size: 11px;
+            font-weight: 700;
+            transition: all 0.2s;
+            gap: 8px;
+        }
+
+        .btn-link:hover {
+            background-color: var(--kh-teal);
+            color: var(--kh-white);
+        }
+
+        /* Color Note (Updated layout) */
+        .color-note {
+            margin-top: var(--space-md);
+            background: var(--kh-slate-50);
+            border: 1px solid var(--kh-slate-200);
+            padding: var(--space-md);
+            display: flex;
+            align-items: flex-start;
+            gap: var(--space-sm);
+            border-radius: var(--radius-md);
+        }
+
+        .color-note-title {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--kh-teal);
+            margin-bottom: 4px;
+        }
+
+        /* Financials Split */
+        .financials-split {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-lg);
+        }
+
+        .materials-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 11px;
+        }
+
+        .materials-table tr { border-bottom: 1px solid var(--kh-slate-100); }
+        .materials-table td { padding: 12px 8px; }
+        .item-name { font-weight: 600; color: var(--kh-slate-700); }
+        .item-price { color: var(--kh-teal); font-weight: 700; text-align: center; }
+        .item-note { color: var(--kh-slate-400); font-style: italic; text-align: right; }
+
+        .equipment-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .equipment-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--kh-slate-50);
+        }
+
+        /* Cost Summary Section */
+        .cost-summary-card {
+            background: var(--kh-slate-900);
+            color: var(--kh-white);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            margin-top: var(--space-sm);
+        }
+
+        .summary-header {
+            background: rgba(255,255,255,0.05);
+            padding: var(--space-sm);
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .summary-totals {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .summary-box {
+            padding: var(--space-md);
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .summary-box:last-child { border-bottom: none; }
+        .summary-label { font-size: 10px; color: var(--kh-slate-400); text-transform: uppercase; margin-bottom: 4px; }
+        .summary-value { font-size: 1.5rem; font-weight: 700; color: var(--kh-white); }
+
+        /* PPE Grid */
+        .ppe-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-sm);
+            margin-top: var(--space-md);
+        }
+
+        .ppe-item {
+            background: var(--kh-slate-50);
+            padding: var(--space-sm);
+            border-radius: var(--radius-md);
+            text-align: center;
+            font-size: 10px;
+            border: 1px solid var(--kh-slate-100);
+        }
+
+        .ppe-item i { color: var(--kh-teal); display: block; margin-bottom: 4px; }
+
+        /* Footer */
+        .footer {
+            margin-top: auto;
+            padding: var(--space-lg) var(--space-md);
+            text-align: center;
+            background: var(--kh-white);
+            border-top: 1px solid var(--kh-slate-100);
+        }
+
+        .footer-text {
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--kh-slate-400);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* 7. RESPONSIVE QUERIES */
+
+        /* Mobile Adjustments */
+        @media (max-width: 480px) {
+            .main-content { padding: 0.5rem; }
+        }
+
+        /* 480px and wider */
+        @media (min-width: 480px) {
+            .summary-totals { flex-direction: row; }
+            .summary-box { flex: 1; border-bottom: none; border-right: 1px solid rgba(255,255,255,0.1); }
+            .summary-box:last-child { border-right: none; }
+            .models-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        /* 640px and wider (Desktop Header Style) */
         @media (min-width: 640px) {
             .header {
                 flex-direction: row;
                 justify-content: space-between;
+                text-align: left;
                 align-items: center;
-                padding: 1.75rem 2.5rem;
-                gap: 1.5rem;
             }
-        }
-
-        .header-left { display: flex; align-items: center; gap: 0.875rem; }
-
-        .header-accent {
-            width: 3px;
-            height: 2.5rem;
-            background: #34d399;
-            border-radius: 99px;
-            opacity: 0.6;
-            flex-shrink: 0;
-        }
-
-        @media (min-width: 640px) { .header-accent { height: 3rem; } }
-
-        .header h1 {
-            font-size: clamp(1rem, 3vw, 1.6rem);
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            line-height: 1.2;
-        }
-
-        .header-sub {
-            font-size: clamp(0.68rem, 2vw, 0.85rem);
-            color: #a7f3d0;
-            opacity: 0.9;
-            margin-top: 0.2rem;
-        }
-
-        .header-right {
-            text-align: left;
-            border-top: 1px solid rgba(255,255,255,0.15);
-            padding-top: 0.75rem;
-        }
-
-        @media (min-width: 640px) {
-            .header-right {
-                text-align: right;
+            .header-lead {
                 border-top: none;
-                border-left: 1px solid rgba(255,255,255,0.18);
+                border-left: 1px solid rgba(255,255,255,0.2);
                 padding-top: 0;
-                padding-left: 1.5rem;
-                flex-shrink: 0;
+                padding-left: var(--space-md);
+                text-align: right;
             }
+            .header-brand { align-items: flex-start; }
         }
 
-        .header-label {
-            font-size: 0.6rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: #6ee7b7;
-        }
-
-        .header-name { font-size: clamp(0.85rem, 2vw, 1.05rem); font-weight: 600; }
-
-        /* ── MAIN CONTENT ── */
-        .content { padding: 1.25rem; display: flex; flex-direction: column; gap: 1.5rem; }
-        @media (min-width: 768px) { .content { padding: 2rem 2.5rem; gap: 2rem; } }
-
-        /* ── SECTION TITLES ── */
-        .section-title {
-            font-size: 0.8rem;
-            font-weight: 700;
-            color: var(--teal);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 0.875rem;
-            text-transform: uppercase;
-            letter-spacing: 0.04em;
-        }
-
+        /* 768px and wider (Split Content) */
         @media (min-width: 768px) {
-            .section-title { font-size: 0.875rem; margin-bottom: 1.125rem; }
+            .financials-split { flex-direction: row; }
+            .materials-box { flex: 3; }
+            .equipment-box { flex: 2; }
         }
 
-        /* ── CARD BASE ── */
-        .card {
-            background: white;
-            border-radius: var(--radius);
-            border: 1px solid var(--slate-200);
-            box-shadow: 0 1px 4px rgba(0,0,0,0.04);
-        }
-
-        .card-header {
-            background: var(--teal);
-            color: white;
-            font-weight: 700;
-            font-size: 0.75rem;
-            padding: 0.75rem 1rem;
-            border-radius: var(--radius) var(--radius) 0 0;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        @media (min-width: 768px) { .card-header { font-size: 0.85rem; padding: 0.875rem 1.25rem; } }
-
-        /* ── PROJECT OBJECTIVE ── */
-        .objective-card { padding: 1rem 1.25rem; }
-        @media (min-width: 768px) { .objective-card { padding: 1.25rem 1.5rem; } }
-
-        .objective-card p {
-            color: var(--slate-600);
-            font-size: 0.8rem;
-            line-height: 1.65;
-        }
-
-        @media (min-width: 768px) { .objective-card p { font-size: 0.85rem; } }
-
-        /* ── OPTION CARDS ── */
-        .options-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1rem;
-        }
-
-        @media (min-width: 480px) { .options-grid { grid-template-columns: 1fr 1fr; } }
-        @media (min-width: 900px) { .options-grid { grid-template-columns: repeat(3, 1fr); } }
-
-        .option-card {
-            background: white;
-            border-radius: var(--radius);
-            border: 1px solid var(--slate-200);
-            box-shadow: 0 1px 4px rgba(0,0,0,0.04);
-            padding: 1.125rem;
-            display: flex;
-            flex-direction: column;
-            transition: box-shadow 0.2s, border-color 0.2s;
-        }
-
-        .option-card:hover {
-            box-shadow: 0 4px 16px rgba(0,80,77,0.12);
-            border-color: var(--teal-light);
-        }
-
-        @media (min-width: 768px) { .option-card { padding: 1.375rem; } }
-
-        .option-badge {
-            font-size: 0.6rem;
-            font-weight: 700;
-            color: var(--teal);
-            text-transform: uppercase;
-            letter-spacing: 0.12em;
-            margin-bottom: 0.3rem;
-        }
-
-        .option-name {
-            font-weight: 700;
-            font-size: 0.925rem;
-            color: var(--slate-800);
-            margin-bottom: 0.2rem;
-        }
-
-        .option-sku {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.65rem;
-            color: var(--slate-400);
-            margin-bottom: 0.75rem;
-        }
-
-        .option-desc {
-            font-size: 0.72rem;
-            color: var(--slate-500);
-            line-height: 1.55;
-            flex: 1;
-        }
-
-        .option-footer {
-            margin-top: 1rem;
-            padding-top: 0.875rem;
-            border-top: 1px solid var(--slate-100);
-        }
-
-        .option-price {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--slate-900);
-            margin-bottom: 0.5rem;
-        }
-
-        .option-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.35rem;
-            font-size: 0.7rem;
-            font-weight: 700;
-            color: var(--teal);
-            text-decoration: none;
-            padding: 0.4rem 0.75rem;
-            border: 1.5px solid var(--teal);
-            border-radius: 6px;
-            transition: background 0.15s, color 0.15s;
-        }
-
-        .option-link:hover { background: var(--teal); color: white; }
-
-        /* ── COLOR NOTE ── */
-        .color-note {
-            background: white;
-            border-left: 4px solid var(--teal);
-            border-radius: 0 var(--radius) var(--radius) 0;
-            padding: 1rem 1.125rem;
-            display: flex;
-            align-items: flex-start;
-            gap: 0.875rem;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.04);
-            border: 1px solid var(--slate-200);
-            border-left: 4px solid var(--teal);
-            margin-top: 1rem;
-        }
-
-        .color-note-icon { color: var(--teal); font-size: 1.1rem; margin-top: 0.1rem; flex-shrink: 0; }
-
-        .color-note p {
-            font-size: 0.72rem;
-            line-height: 1.6;
-            color: var(--slate-600);
-        }
-
-        /* ── FINANCIALS GRID ── */
-        .financials-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1rem;
-        }
-
-        @media (min-width: 768px) { .financials-grid { grid-template-columns: 3fr 2fr; } }
-
-        /* ── MATERIALS TABLE ── */
-        .materials-table { width: 100%; border-collapse: collapse; }
-
-        .materials-table td {
-            padding: 0.7rem 1rem;
-            font-size: 0.72rem;
-            border-bottom: 1px solid var(--slate-100);
-        }
-
-        @media (min-width: 768px) { .materials-table td { font-size: 0.78rem; padding: 0.8rem 1.25rem; } }
-
-        .materials-table tr:last-child td { border-bottom: none; }
-
-        .mat-name { font-weight: 600; color: var(--slate-700); }
-        .mat-price { font-weight: 700; color: var(--teal); white-space: nowrap; }
-        .mat-note { color: var(--slate-400); font-style: italic; font-size: 0.65rem; }
-
-        /* ── EQUIPMENT ── */
-        .equipment-body { padding: 1rem 1.125rem; display: flex; flex-direction: column; gap: 0.75rem; }
-        @media (min-width: 768px) { .equipment-body { padding: 1.25rem; } }
-
-        .equip-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.72rem;
-            padding-bottom: 0.625rem;
-            border-bottom: 1px solid var(--slate-100);
-        }
-
-        @media (min-width: 768px) { .equip-row { font-size: 0.78rem; } }
-
-        .equip-row:last-child { border-bottom: none; padding-bottom: 0; }
-        .equip-name { font-weight: 700; color: var(--slate-700); }
-        .equip-price { font-weight: 700; color: var(--teal); }
-        .equip-owned { font-weight: 700; color: var(--slate-400); }
-
-        /* ── COST SUMMARY ── */
-        .cost-summary-header {
-            background: var(--teal);
-            color: white;
-            padding: 0.875rem 1.125rem;
-            border-radius: var(--radius) var(--radius) 0 0;
-            display: flex;
-            flex-direction: column;
-            gap: 0.25rem;
-        }
-
-        @media (min-width: 640px) {
-            .cost-summary-header {
-                flex-direction: row;
-                justify-content: space-between;
-                align-items: center;
-                padding: 0.875rem 1.375rem;
-            }
-        }
-
-        .cost-summary-title { font-weight: 700; font-size: 0.8rem; display: flex; align-items: center; gap: 0.5rem; }
-        @media (min-width: 768px) { .cost-summary-title { font-size: 0.875rem; } }
-
-        .cost-summary-sub {
-            font-size: 0.62rem;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            opacity: 0.75;
-        }
-
-        .cost-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            border-top: none;
-        }
-
-        @media (min-width: 480px) {
-            .cost-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
-
-        .cost-cell {
-            padding: 1.25rem 1rem;
-            text-align: center;
-            border-bottom: 1px solid var(--slate-100);
-        }
-
-        @media (min-width: 480px) {
-            .cost-cell {
-                border-bottom: none;
-                border-right: 1px solid var(--slate-100);
-            }
-            .cost-cell:last-child { border-right: none; }
-        }
-
-        .cost-label {
-            font-size: 0.6rem;
-            font-weight: 700;
-            color: var(--slate-400);
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 0.4rem;
-        }
-
-        .cost-amount {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: var(--teal);
-        }
-
-        @media (min-width: 768px) { .cost-amount { font-size: 1.6rem; } }
-
-        .cost-note {
-            background: var(--slate-50);
-            padding: 0.625rem 1rem;
-            text-align: center;
-            font-size: 0.65rem;
-            color: var(--slate-400);
-            font-style: italic;
-            border-top: 1px solid var(--slate-100);
-            border-radius: 0 0 var(--radius) var(--radius);
-        }
-
-        /* ── SAFETY SECTION ── */
-        .critical-note {
-            background: var(--amber-50);
-            border: 1px solid var(--amber-200);
-            border-radius: var(--radius);
-            padding: 1rem 1.125rem;
-        }
-
-        .critical-title {
-            color: var(--amber-800);
-            font-weight: 700;
-            font-size: 0.78rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .critical-note p {
-            color: var(--amber-900);
-            font-size: 0.72rem;
-            line-height: 1.6;
-        }
-
-        .safety-standards-header {
-            display: flex;
-            flex-direction: column;
-            gap: 0.25rem;
-            margin-bottom: 0.75rem;
-        }
-
-        @media (min-width: 640px) {
-            .safety-standards-header {
-                flex-direction: row;
-                justify-content: space-between;
-                align-items: flex-end;
-            }
-        }
-
-        .safety-title {
-            color: var(--teal);
-            font-weight: 700;
-            font-size: 0.8rem;
-            text-decoration: underline;
-        }
-
-        .safety-req {
-            font-size: 0.62rem;
-            font-weight: 700;
-            color: var(--slate-400);
-            font-style: italic;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .safety-desc {
-            font-size: 0.72rem;
-            color: var(--slate-600);
-            line-height: 1.6;
-            margin-bottom: 1rem;
-        }
-
-        /* ── PPE GRID ── */
-        .ppe-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 0.625rem;
-            margin-bottom: 1rem;
-        }
-
-        @media (min-width: 480px) { .ppe-grid { grid-template-columns: repeat(4, 1fr); } }
-
-        .ppe-card {
-            background: var(--slate-50);
-            border: 1px solid var(--slate-100);
-            border-radius: 8px;
-            padding: 0.75rem 0.5rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            gap: 0.4rem;
-        }
-
-        .ppe-card i { color: var(--teal); font-size: 1rem; }
-        .ppe-name { font-size: 0.65rem; font-weight: 700; color: var(--slate-700); }
-        .ppe-desc { font-size: 0.6rem; color: var(--slate-500); line-height: 1.3; }
-
-        /* ── WORK ZONE ── */
-        .work-zone-note {
-            background: var(--slate-100);
-            border-left: 4px solid var(--teal);
-            border-radius: 0 8px 8px 0;
-            padding: 0.875rem 1rem;
-            font-size: 0.72rem;
-            line-height: 1.55;
-        }
-
-        .work-zone-note strong { color: var(--slate-800); }
-        .work-zone-note span { color: var(--slate-600); }
-
-        /* ── SAFETY CARD BODY ── */
-        .safety-card-body { padding: 1.125rem; display: flex; flex-direction: column; gap: 1.25rem; }
-        @media (min-width: 768px) { .safety-card-body { padding: 1.5rem; gap: 1.5rem; } }
-
-        /* ── FOOTER ── */
-        footer {
-            background: var(--slate-900);
-            color: var(--slate-400);
-            padding: 1.25rem;
-            text-align: center;
-        }
-
-        .footer-text {
-            font-size: 0.62rem;
-            text-transform: uppercase;
-            letter-spacing: 0.12em;
-            font-weight: 700;
-        }
-
-        /* ── PRINT ── */
-        @media print {
-            @page { margin: 0; size: auto; }
-            body { background: white !important; padding: 0 !important; }
-            .proposal { max-width: none !important; box-shadow: none !important; border-radius: 0 !important; }
-            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-            a { text-decoration: none !important; color: var(--teal) !important; font-weight: bold; }
+        /* 900px and wider */
+        @media (min-width: 900px) {
+            .models-grid { grid-template-columns: repeat(3, 1fr); }
+            .model-card { transition: transform 0.2s, border-color 0.2s; }
+            .model-card:hover { transform: translateY(-4px); border-color: var(--kh-teal); box-shadow: var(--shadow-hover); }
         }
     </style>
 </head>
 <body>
 
-<div class="proposal">
-
-    <!-- HEADER -->
-    <header class="header">
-        <div class="header-left">
-            <div class="header-accent"></div>
-            <div>
-                <h1>Bollard Installation Proposal</h1>
-                <p class="header-sub">Kingdom Hall Operating Committee &nbsp;|&nbsp; 916 Black Locust</p>
+    <div class="proposal-container">
+        <!-- Professional Header -->
+        <header class="header">
+            <div class="header-brand">
+                <div class="header-title">
+                    <h1>Bollard Installation Proposal</h1>
+                    <p class="header-subtitle">Kingdom Hall Operating Committee | 916 Black Locust</p>
+                </div>
             </div>
-        </div>
-        <div class="header-right">
-            <div class="header-label">Technical Lead</div>
-            <div class="header-name">Julio Moreno</div>
-        </div>
-    </header>
+            <div class="header-lead">
+                <div class="lead-label">Technical Lead</div>
+                <div class="lead-name">Julio Moreno</div>
+            </div>
+        </header>
 
-    <div class="content">
-
-        <!-- PROJECT OBJECTIVE -->
-        <section>
-            <div class="card">
-                <div style="padding: 1rem 1.25rem;">
-                    <div class="section-title">
-                        <i class="fas fa-circle-info"></i> Project Objective
+        <div class="main-content">
+            
+            <!-- Project Objective -->
+            <details open>
+                <summary>
+                    <div class="summary-label">
+                        <i class="fas fa-circle-info"></i>
+                        <span>Project Objective</span>
                     </div>
-                    <p style="color: var(--slate-600); font-size: 0.8rem; line-height: 1.65;">
-                        Install permanent steel bollards to protect the exterior of the building from vehicle impact.
-                        The process includes cutting asphalt, setting structural pipes in deep concrete footings, and filling cores with
-                        high-strength concrete for maximum long-term durability.
+                    <i class="fas fa-chevron-down summary-chevron"></i>
+                </summary>
+                <div class="details-content">
+                    <p style="font-size: 13px; color: var(--kh-slate-600);">
+                        Install permanent steel bollards to protect the exterior of the building from vehicle impact. 
+                        The process includes cutting asphalt, setting structural pipes in deep concrete footings, and filling cores with high-strength concrete for maximum long-term durability.
                     </p>
                 </div>
-            </div>
-        </section>
+            </details>
 
-        <!-- RECOMMENDED MODELS -->
-        <section>
-            <div class="section-title">
-                <i class="fas fa-list-check"></i> Recommended Models
-            </div>
-
-            <div class="options-grid">
-                <!-- Option A -->
-                <div class="option-card">
-                    <div class="option-badge">Option A</div>
-                    <div class="option-name">48" Steel Pipe</div>
-                    <div class="option-sku">BOLPP-48-5.5</div>
-                    <p class="option-desc">Highest visibility and resistance. Includes black and yellow safety stripes. Best for corners and high-traffic areas.</p>
-                    <div class="option-footer">
-                        <div class="option-price">$194.00</div>
-                        <a href="https://a.co/d/05AJuRfZ" target="_blank" class="option-link">
-                            <i class="fas fa-external-link-alt"></i> View on Amazon
-                        </a>
+            <!-- Recommended Models -->
+            <details open>
+                <summary>
+                    <div class="summary-label">
+                        <i class="fas fa-list-check"></i>
+                        <span>Recommended Models</span>
+                    </div>
+                    <i class="fas fa-chevron-down summary-chevron"></i>
+                </summary>
+                <div class="details-content">
+                    <div class="models-grid">
+                        <div class="model-card">
+                            <span class="model-tag">Option A</span>
+                            <h3 class="model-name">48" Steel Pipe</h3>
+                            <p class="model-sku">BOLPP-48-5.5</p>
+                            <p class="model-description">Highest visibility and resistance. Includes black/yellow safety stripes.</p>
+                            <div class="model-price">$194.00</div>
+                            <a href="https://a.co/d/05AJuRfZ" target="_blank" class="btn-link">View Details</a>
+                        </div>
+                        <div class="model-card">
+                            <span class="model-tag">Option B</span>
+                            <h3 class="model-name">42" Steel Pipe</h3>
+                            <p class="model-sku">BOLPP-42-5.5</p>
+                            <p class="model-description">Industry standard height. Maintains subtle building profile.</p>
+                            <div class="model-price">$150.99</div>
+                            <a href="https://a.co/d/0ePIBAd5" target="_blank" class="btn-link">View Details</a>
+                        </div>
+                        <div class="model-card">
+                            <span class="model-tag">Option C</span>
+                            <h3 class="model-name">42" Galvanized</h3>
+                            <p class="model-sku">BOLPP-42-5.5-HDG</p>
+                            <p class="model-description">Longevity recommendation. Prevents rust from inside out.</p>
+                            <div class="model-price">$150 - $155</div>
+                            <a href="https://www.uline.com/Product/Detail/H-7686/Safety-Guards-Barriers/Pour-in-Place-Safety-Bollard-55-x-42?pricode=WB8306" target="_blank" class="btn-link">View Details</a>
+                        </div>
+                    </div>
+                    
+                    <div class="color-note">
+                        <i class="fas fa-palette" style="color: var(--kh-teal); font-size: 1.25rem;"></i>
+                        <div>
+                            <strong class="color-note-title">Custom Color Matching</strong>
+                            <p style="font-size: 11px; color: var(--kh-slate-600);">To match specific building colors (Gray or Blue), order directly from <strong>Vestil (1-800-348-0868)</strong>. Add <strong>"SPO-PC-[color]"</strong> to model number on your purchase order for factory powder-coating.</p>
+                        </div>
                     </div>
                 </div>
+            </details>
 
-                <!-- Option B -->
-                <div class="option-card">
-                    <div class="option-badge">Option B</div>
-                    <div class="option-name">42" Steel Pipe</div>
-                    <div class="option-sku">BOLPP-42-5.5</div>
-                    <p class="option-desc">Industry standard height. Maintains a professional and subtle profile for the building exterior.</p>
-                    <div class="option-footer">
-                        <div class="option-price">$150.99</div>
-                        <a href="https://a.co/d/0ePIBAd5" target="_blank" class="option-link">
-                            <i class="fas fa-external-link-alt"></i> View on Amazon
-                        </a>
+            <!-- Required Materials & Equipment -->
+            <details>
+                <summary>
+                    <div class="summary-label">
+                        <i class="fas fa-box-open"></i>
+                        <span>Financials & Equipment</span>
+                    </div>
+                    <i class="fas fa-chevron-down summary-chevron"></i>
+                </summary>
+                <div class="details-content">
+                    <div class="financials-split">
+                        <div class="materials-box">
+                            <h4 style="font-size: 12px; font-weight: 700; color: var(--kh-teal); margin-bottom: 0.5rem; text-transform: uppercase;">Required Materials</h4>
+                            <table class="materials-table">
+                                <tbody>
+                                    <tr><td class="item-name">Bollard Pipe</td><td class="item-price">$125 to $215</td><td class="item-note">Per selection</td></tr>
+                                    <tr><td class="item-name">Concrete (5000 PSI)</td><td class="item-price">$6.50/bag</td><td class="item-note">Footing & Core</td></tr>
+                                    <tr><td class="item-name">#4 Rebar (1/2")</td><td class="item-price">$8.00/pc</td><td class="item-note">Cross-pinning</td></tr>
+                                    <tr><td class="item-name">Asphalt Cold Patch</td><td class="item-price">$18.00/bag</td><td class="item-note">Sealing</td></tr>
+                                    <tr><td class="item-name">Optional Cover</td><td class="item-price">$45.00</td><td class="item-note">Plastic Sleeve</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="equipment-box">
+                            <h4 style="font-size: 12px; font-weight: 700; color: var(--kh-teal); margin-bottom: 0.5rem; text-transform: uppercase;">Equipment Rentals</h4>
+                            <div class="equipment-list">
+                                <div class="equipment-item"><span>Jackhammer</span><span class="item-price">$85.00/day</span></div>
+                                <div class="equipment-item"><span>Post Hole Auger</span><span class="item-price">$95.00/day</span></div>
+                                <div class="equipment-item"><span>Concrete Mixer</span><span class="item-price">$50.00/day</span></div>
+                                <div class="equipment-item"><span style="color: var(--kh-slate-400); font-style: italic;">Standard Tools</span><span style="font-weight: 700; font-size: 10px;">OWNED</span></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
+            </details>
 
-                <!-- Option C -->
-                <div class="option-card">
-                    <div class="option-badge">Option C</div>
-                    <div class="option-name">42" Galvanized</div>
-                    <div class="option-sku">BOLPP-42-5.5-HDG</div>
-                    <p class="option-desc">Recommended for longevity. Prevents rust from the inside out. Best for wet conditions or areas using road salt.</p>
-                    <div class="option-footer">
-                        <div class="option-price">$150 – $155</div>
-                        <a href="https://www.uline.com/Product/Detail/H-7686/Safety-Guards-Barriers/Pour-in-Place-Safety-Bollard-55-x-42?pricode=WB8306" target="_blank" class="option-link">
-                            <i class="fas fa-external-link-alt"></i> View on Uline
-                        </a>
+            <!-- Cost Summary -->
+            <section class="cost-summary-card">
+                <div class="summary-header">
+                    <div style="font-size: 12px; font-weight: 700;"><i class="fas fa-calculator mr-2"></i> Estimated Total Project Cost</div>
+                    <div style="font-size: 9px; opacity: 0.7; text-transform: uppercase; letter-spacing: 0.1em; margin-top: 4px;">Based on 4 Bollards | 1-Day Job</div>
+                </div>
+                <div class="summary-totals">
+                    <div class="summary-box">
+                        <div class="summary-label">Total Option A</div>
+                        <div class="summary-value">~$1,194</div>
+                    </div>
+                    <div class="summary-box">
+                        <div class="summary-label">Total Option B</div>
+                        <div class="summary-value">~$1,022</div>
+                    </div>
+                    <div class="summary-box">
+                        <div class="summary-label">Total Option C</div>
+                        <div class="summary-value">~$1,028</div>
                     </div>
                 </div>
-            </div>
-
-            <!-- Custom Color Note -->
-            <div class="color-note">
-                <div class="color-note-icon"><i class="fas fa-palette"></i></div>
-                <p>
-                    <strong>Custom Color Matching:</strong> To match specific building colors (Gray or Blue), order directly from
-                    <strong>Vestil (1-800-348-0868)</strong>. Add <strong>"SPO-PC-[color]"</strong> to the model number on your
-                    purchase order for factory powder-coating.
-                </p>
-            </div>
-        </section>
-
-        <!-- FINANCIALS & EQUIPMENT -->
-        <div class="financials-grid">
-
-            <!-- Materials Table -->
-            <div class="card" style="overflow: hidden;">
-                <div class="card-header">
-                    <i class="fas fa-box-open"></i> Required Materials
+                <div style="background: rgba(255,255,255,0.03); padding: 12px; text-align: center; font-size: 9px; color: var(--kh-slate-500); font-style: italic;">
+                    Estimates include all materials, equipment rentals, and labor logistics.
                 </div>
-                <table class="materials-table">
-                    <tbody>
-                        <tr>
-                            <td class="mat-name">Bollard Pipe</td>
-                            <td class="mat-price">$125 – $215</td>
-                            <td class="mat-note">Per selection</td>
-                        </tr>
-                        <tr>
-                            <td class="mat-name">Concrete (5000 PSI)</td>
-                            <td class="mat-price">$6.50 / bag</td>
-                            <td class="mat-note">Footing &amp; Core</td>
-                        </tr>
-                        <tr>
-                            <td class="mat-name">#4 Rebar (1/2")</td>
-                            <td class="mat-price">$8.00 / pc</td>
-                            <td class="mat-note">Structural cross-pinning</td>
-                        </tr>
-                        <tr>
-                            <td class="mat-name">Asphalt Cold Patch</td>
-                            <td class="mat-price">$18.00 / bag</td>
-                            <td class="mat-note">Surface sealing</td>
-                        </tr>
-                        <tr>
-                            <td class="mat-name">Optional Cover</td>
-                            <td class="mat-price">$45.00</td>
-                            <td class="mat-note">Plastic Sleeve</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+            </section>
 
-            <!-- Equipment -->
-            <div class="card" style="overflow: hidden;">
-                <div class="card-header">
-                    <i class="fas fa-tools"></i> Equipment Rentals
-                </div>
-                <div class="equipment-body">
-                    <div class="equip-row">
-                        <span class="equip-name">Jackhammer</span>
-                        <span class="equip-price">$85.00 / day</span>
+            <!-- Safety Notes -->
+            <details>
+                <summary>
+                    <div class="summary-label">
+                        <i class="fas fa-triangle-exclamation"></i>
+                        <span>Planning & Safety Notes</span>
                     </div>
-                    <div class="equip-row">
-                        <span class="equip-name">Post Hole Auger</span>
-                        <span class="equip-price">$95.00 / day</span>
+                    <i class="fas fa-chevron-down summary-chevron"></i>
+                </summary>
+                <div class="details-content" style="background: #fffcf0;">
+                    <div style="background: #fff; border: 1px solid #fde68a; border-radius: var(--radius-md); padding: var(--space-md); border-left: 4px solid #f59e0b; margin-bottom: var(--space-md);">
+                        <h3 style="color: #92400e; font-size: 12px; font-weight: 700; margin-bottom: 4px;"><i class="fas fa-bolt"></i> CRITICAL: Underground Utilities</h3>
+                        <p style="font-size: 11px; color: #78350f; line-height: 1.4;">Before any digging begins, we must contact <strong>811</strong>. Conduits for parking lights and water mains can run directly under asphalt. Call 48 to 72 hours before work starts.</p>
                     </div>
-                    <div class="equip-row">
-                        <span class="equip-name">Concrete Mixer</span>
-                        <span class="equip-price">$50.00 / day</span>
+
+                    <h4 style="font-size: 11px; font-weight: 700; color: var(--kh-teal); text-decoration: underline; margin-bottom: 8px;">Safety Standards (DC-82-E)</h4>
+                    <p style="font-size: 10px; color: var(--kh-slate-600);">A JHA (DC-85) must be performed to address flying debris risks and heavy lifting.</p>
+
+                    <div class="ppe-grid">
+                        <div class="ppe-item"><i class="fas fa-glasses"></i>Eye Protection</div>
+                        <div class="ppe-item"><i class="fas fa-mitten"></i>Hand Protection</div>
+                        <div class="ppe-item"><i class="fas fa-ear-listen"></i>Hearing Protection</div>
+                        <div class="ppe-item"><i class="fas fa-mask"></i>Respiratory</div>
                     </div>
-                    <div class="equip-row">
-                        <span class="equip-name" style="color:var(--slate-400); font-style:italic; font-weight:500;">Standard Tools</span>
-                        <span class="equip-owned">OWNED</span>
+
+                    <div style="margin-top: var(--space-md); font-size: 10px; color: var(--kh-slate-500); font-style: italic; border-top: 1px solid #f1f5f9; padding-top: 8px;">
+                        <strong>Work Zone:</strong> Cordon off area with cones/tape to prevent entry while concrete cures.
                     </div>
                 </div>
-            </div>
+            </details>
+
         </div>
 
-        <!-- COST SUMMARY -->
-        <section>
-            <div class="card" style="overflow:hidden;">
-                <div class="cost-summary-header">
-                    <div class="cost-summary-title"><i class="fas fa-calculator"></i> Estimated Total Project Cost</div>
-                    <div class="cost-summary-sub">Based on 4 Bollards &nbsp;|&nbsp; 1-Day Job</div>
-                </div>
-                <div class="cost-grid">
-                    <div class="cost-cell">
-                        <div class="cost-label">Total Option A</div>
-                        <div class="cost-amount">~$1,194.00</div>
-                    </div>
-                    <div class="cost-cell">
-                        <div class="cost-label">Total Option B</div>
-                        <div class="cost-amount">~$1,021.96</div>
-                    </div>
-                    <div class="cost-cell">
-                        <div class="cost-label">Total Option C</div>
-                        <div class="cost-amount">~$1,028.00</div>
-                    </div>
-                </div>
-                <div class="cost-note">
-                    Estimates include all materials, equipment rentals, and labor logistics for a standard 4-bollard installation.
-                </div>
-            </div>
-        </section>
-
-        <!-- SAFETY & PLANNING -->
-        <section>
-            <div class="card" style="overflow:hidden;">
-                <div class="card-header">
-                    <i class="fas fa-triangle-exclamation"></i> Important Planning &amp; Safety Notes
-                </div>
-                <div class="safety-card-body">
-
-                    <!-- Critical Note -->
-                    <div class="critical-note">
-                        <div class="critical-title">
-                            <i class="fas fa-bolt"></i> CRITICAL NOTE: Underground Utilities
-                        </div>
-                        <p>
-                            Before any digging begins, we must contact the local utility marking service (e.g., 811 or "Call Before You Dig").
-                            Even though we are in a parking lot, gas lines, electrical conduits for parking lights, and water mains can run
-                            directly under the asphalt. This call must be made at least 48–72 hours before work starts.
-                        </p>
-                    </div>
-
-                    <!-- Safety Standards -->
-                    <div>
-                        <div class="safety-standards-header">
-                            <div class="safety-title">Safety Standards (DC-82-E)</div>
-                            <div class="safety-req">Job Hazard Analysis (DC-85) Required</div>
-                        </div>
-                        <p class="safety-desc">
-                            A JHA must be performed before installation to address risks such as flying debris from the jackhammer and heavy lifting of concrete bags.
-                        </p>
-
-                        <!-- PPE Grid -->
-                        <div class="ppe-grid">
-                            <div class="ppe-card">
-                                <i class="fas fa-glasses"></i>
-                                <div class="ppe-name">Eye Protection</div>
-                                <div class="ppe-desc">Breaking asphalt / mixing</div>
-                            </div>
-                            <div class="ppe-card">
-                                <i class="fas fa-mitten"></i>
-                                <div class="ppe-name">Hand Protection</div>
-                                <div class="ppe-desc">Handling steel / concrete</div>
-                            </div>
-                            <div class="ppe-card">
-                                <i class="fas fa-ear-listen"></i>
-                                <div class="ppe-name">Hearing Protection</div>
-                                <div class="ppe-desc">Jackhammer / Auger use</div>
-                            </div>
-                            <div class="ppe-card">
-                                <i class="fas fa-mask"></i>
-                                <div class="ppe-name">Respiratory</div>
-                                <div class="ppe-desc">Pouring dry concrete</div>
-                            </div>
-                        </div>
-
-                        <div class="work-zone-note">
-                            <strong>Work Zone Management:</strong>
-                            <span> The area should be cordoned off with cones or tape to prevent vehicles from entering the workspace while the concrete is curing.</span>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </section>
-
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-text">916 Black Locust Drive East | Pflugerville, TX</div>
+        </footer>
     </div>
-
-    <!-- FOOTER -->
-    <footer>
-        <div class="footer-text">916 Black Locust Drive East &nbsp;|&nbsp; Pflugerville, TX</div>
-    </footer>
-
-</div>
 
 </body>
 </html>
