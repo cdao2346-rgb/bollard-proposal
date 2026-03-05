@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bollard Installation Proposal - 916 Black Locust</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        
+        :root {
+            --kh-teal: #00504d;
+            --kh-teal-dark: #003d3a;
+            --kh-brick: #f5f1e8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f1f5f9;
+            color: #1e293b;
+            margin: 0;
+            padding: 1rem 0;
+        }
+
+        @media (min-width: 768px) {
+            body { padding: 2rem 0; }
+        }
+
+        .proposal-container {
+            background-color: var(--kh-brick);
+            width: 95%;
+            max-width: 1000px;
+            margin: 0 auto;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .kh-bg-teal { background-color: var(--kh-teal); }
+        .kh-text-teal { color: var(--kh-teal); }
+        .kh-border-teal { border-color: var(--kh-teal); }
+
+        @media print {
+            @page { margin: 0; size: auto; }
+            body { background: white !important; padding: 0 !important; margin: 0 !important; }
+            .proposal-container { 
+                width: 100% !important; 
+                max-width: none !important; 
+                box-shadow: none !important; 
+                margin: 0 !important; 
+                border-radius: 0 !important;
+                background-color: var(--kh-brick) !important;
+                display: block !important;
+                min-height: 100vh;
+            }
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+            a { text-decoration: none !important; color: var(--kh-teal) !important; font-weight: bold; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="proposal-container">
+        <!-- Professional Header -->
+        <header class="kh-bg-teal text-white px-6 py-6 md:px-10 md:py-8 flex justify-between items-center relative">
+            <div class="flex items-center gap-4">
+                <div class="w-1 bg-emerald-400 h-12 rounded-full opacity-50"></div>
+                <div>
+                    <h1 class="text-xl md:text-3xl font-bold tracking-tight">Bollard Installation Proposal</h1>
+                    <p class="text-emerald-100 text-xs md:text-base opacity-90">Kingdom Hall Operating Committee | 916 Black Locust</p>
+                </div>
+            </div>
+            <div class="text-right border-l border-white/20 pl-4 md:pl-8 hidden sm:block">
+                <div class="text-[10px] font-bold uppercase tracking-widest text-emerald-300">Technical Lead</div>
+                <div class="text-sm md:text-lg font-semibold">Julio Moreno</div>
+            </div>
+        </header>
+
+        <div class="p-6 md:p-10 space-y-8">
+            <!-- Project Overview -->
+            <section class="bg-white p-5 md:p-6 rounded-lg border border-slate-200 shadow-sm">
+                <h2 class="kh-text-teal font-bold text-base md:text-lg mb-2 flex items-center gap-2">
+                    <i class="fas fa-circle-info"></i> Project Objective
+                </h2>
+                <p class="text-slate-600 text-xs md:text-sm leading-relaxed">
+                    Install permanent steel bollards to protect the exterior of the building from vehicle impact. 
+                    The process includes cutting asphalt, setting structural pipes in deep concrete footings, and filling cores with high-strength concrete for maximum long-term durability.
+                </p>
+            </section>
+
+            <!-- Recommended Models -->
+            <section>
+                <h2 class="kh-text-teal font-bold text-base md:text-lg mb-5 flex items-center gap-2">
+                    <i class="fas fa-list-check"></i> Recommended Models
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Option A -->
+                    <div class="bg-white rounded-xl p-5 md:p-6 border border-slate-200 shadow-sm flex flex-col">
+                        <span class="text-[9px] font-bold kh-text-teal uppercase tracking-widest mb-1">Option A</span>
+                        <h3 class="font-bold text-slate-800 text-sm md:text-base mb-1">48" Steel Pipe</h3>
+                        <p class="text-[10px] text-slate-400 mb-3 font-mono">BOLPP-48-5.5</p>
+                        <p class="text-[11px] text-slate-500 mb-6">Highest visibility and resistance. Includes black and yellow safety stripes. Best for corners and high traffic areas.</p>
+                        <div class="mt-auto pt-4 border-t border-slate-50">
+                            <div class="text-lg md:text-xl font-bold text-slate-900 mb-3">$194.00</div>
+                            <a href="https://a.co/d/05AJuRfZ" target="_blank" class="text-[10px] md:text-xs text-kh-teal hover:underline flex items-center gap-1 font-bold">
+                                <i class="fas fa-external-link-alt"></i> View on Amazon
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Option B -->
+                    <div class="bg-white rounded-xl p-5 md:p-6 border border-slate-200 shadow-sm flex flex-col">
+                        <span class="text-[9px] font-bold kh-text-teal uppercase tracking-widest mb-1">Option B</span>
+                        <h3 class="font-bold text-slate-800 text-sm md:text-base mb-1">42" Steel Pipe</h3>
+                        <p class="text-[10px] text-slate-400 mb-3 font-mono">BOLPP-42-5.5</p>
+                        <p class="text-[11px] text-slate-500 mb-6">Industry standard height. Maintains a professional and subtle profile for the building exterior.</p>
+                        <div class="mt-auto pt-4 border-t border-slate-50">
+                            <div class="text-lg md:text-xl font-bold text-slate-900 mb-3">$150.99</div>
+                            <a href="https://a.co/d/0ePIBAd5" target="_blank" class="text-[10px] md:text-xs text-kh-teal hover:underline flex items-center gap-1 font-bold">
+                                <i class="fas fa-external-link-alt"></i> View on Amazon
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Option C -->
+                    <div class="bg-white rounded-xl p-5 md:p-6 border-2 kh-border-teal shadow-md flex flex-col relative">
+                        <span class="text-[9px] font-bold kh-text-teal uppercase tracking-widest mb-1">Option C</span>
+                        <h3 class="font-bold text-slate-800 text-sm md:text-base mb-1">42" Galvanized</h3>
+                        <p class="text-[10px] text-slate-400 mb-3 font-mono">BOLPP-42-5.5-HDG</p>
+                        <p class="text-[11px] text-slate-500 mb-6">Recommended for longevity. Prevents rust from the inside out. Best for wet conditions or areas using road salt.</p>
+                        <div class="mt-auto pt-4 border-t border-slate-50">
+                            <div class="text-lg md:text-xl font-bold text-slate-900 mb-3">$150 - $155</div>
+                            <a href="https://www.uline.com/Product/Detail/H-7686/Safety-Guards-Barriers/Pour-in-Place-Safety-Bollard-55-x-42?pricode=WB8306" target="_blank" class="text-[10px] md:text-xs text-kh-teal hover:underline flex items-center gap-1 font-bold">
+                                <i class="fas fa-external-link-alt"></i> View on Uline
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Custom Color Note -->
+                <div class="mt-6 bg-white border-l-4 kh-border-teal p-5 rounded shadow-sm flex items-center gap-4">
+                    <div class="kh-text-teal text-xl md:text-2xl"><i class="fas fa-palette"></i></div>
+                    <p class="text-[10px] md:text-[11px] leading-relaxed text-slate-600">
+                        <strong>Custom Color Matching:</strong> To match specific building colors (Gray or Blue), order directly from <strong>Vestil (1-800-348-0868)</strong>. Add <strong>"SPO-PC-[color]"</strong> to model number on your purchase order for factory powder-coating.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Financials & Equipment -->
+            <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
+                <!-- Materials Table -->
+                <div class="lg:col-span-3 bg-white rounded-lg border border-slate-200 overflow-hidden shadow-sm">
+                    <div class="kh-bg-teal p-4 text-white font-bold text-xs md:text-sm">
+                        <i class="fas fa-box-open mr-2"></i> Required Materials
+                    </div>
+                    <table class="w-full text-left text-[10px] md:text-xs">
+                        <tbody class="divide-y divide-slate-100">
+                            <tr><td class="p-4 font-semibold text-slate-700">Bollard Pipe</td><td class="p-4 text-kh-teal font-bold">$125 to $215</td><td class="p-4 text-slate-400 italic text-[10px]">Per selection</td></tr>
+                            <tr><td class="p-4 font-semibold text-slate-700">Concrete (5000 PSI)</td><td class="p-4 text-kh-teal font-bold">$6.50 / bag</td><td class="p-4 text-slate-400 italic text-[10px]">Footing & Core</td></tr>
+                            <tr><td class="p-4 font-semibold text-slate-700">#4 Rebar (1/2")</td><td class="p-4 text-kh-teal font-bold">$8.00 / pc</td><td class="p-4 text-slate-400 italic text-[10px]">Structural cross-pinning</td></tr>
+                            <tr><td class="p-4 font-semibold text-slate-700">Asphalt Cold Patch</td><td class="p-4 text-kh-teal font-bold">$18.00 / bag</td><td class="p-4 text-slate-400 italic text-[10px]">Surface sealing</td></tr>
+                            <tr><td class="p-4 font-semibold text-slate-700">Optional Cover</td><td class="p-4 text-kh-teal font-bold">$45.00</td><td class="p-4 text-slate-400 italic text-[10px]">Plastic Sleeve</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Equipment -->
+                <div class="lg:col-span-2 bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden">
+                    <div class="kh-bg-teal p-4 text-white font-bold text-xs md:text-sm">
+                        <i class="fas fa-tools mr-2"></i> Equipment Rentals
+                    </div>
+                    <div class="p-6 space-y-4">
+                        <div class="flex justify-between items-center text-[10px] md:text-xs border-b border-slate-50 pb-3">
+                            <span class="font-bold text-slate-700">Jackhammer</span>
+                            <span class="kh-text-teal font-bold">$85.00 / day</span>
+                        </div>
+                        <div class="flex justify-between items-center text-[10px] md:text-xs border-b border-slate-50 pb-3">
+                            <span class="font-bold text-slate-700">Post Hole Auger</span>
+                            <span class="kh-text-teal font-bold">$95.00 / day</span>
+                        </div>
+                        <div class="flex justify-between items-center text-[10px] md:text-xs border-b border-slate-50 pb-3">
+                            <span class="font-bold text-slate-700">Concrete Mixer</span>
+                            <span class="kh-text-teal font-bold">$50.00 / day</span>
+                        </div>
+                        <div class="flex justify-between items-center text-[10px] md:text-xs opacity-60">
+                            <span class="font-medium italic text-slate-500">Standard Tools</span>
+                            <span class="font-bold">OWNED</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cost Summary Section -->
+            <section class="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden">
+                <div class="kh-bg-teal p-4 text-white font-bold flex flex-col md:flex-row md:justify-between md:items-center gap-1 md:gap-4">
+                    <span class="text-xs md:text-sm"><i class="fas fa-calculator mr-2"></i> Estimated Total Project Cost</span>
+                    <span class="text-[9px] md:text-[10px] uppercase tracking-widest opacity-80">Based on 4 Bollards | 1-Day Job</span>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-slate-100">
+                    <div class="p-6 text-center">
+                        <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Total Option A</div>
+                        <div class="text-xl md:text-2xl font-bold text-kh-teal">~$1,194.00</div>
+                    </div>
+                    <div class="p-6 text-center">
+                        <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Total Option B</div>
+                        <div class="text-xl md:text-2xl font-bold text-kh-teal">~$1,021.96</div>
+                    </div>
+                    <div class="p-6 text-center">
+                        <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Total Option C</div>
+                        <div class="text-xl md:text-2xl font-bold text-kh-teal">~$1,028.00</div>
+                    </div>
+                </div>
+                <div class="bg-slate-50 p-3 text-center text-[9px] md:text-[10px] text-slate-400 italic border-t border-slate-100">
+                    Estimates include all materials, equipment rentals, and labor logistics for a standard 4-bollard installation.
+                </div>
+            </section>
+        </div>
+
+        <!-- Footer -->
+        <footer class="bg-slate-900 text-slate-500 py-8 px-10 flex justify-center items-center mt-auto">
+            <div class="text-[10px] uppercase tracking-widest text-slate-400 font-bold text-center">916 Black Locust Drive East | Pflugerville, TX</div>
+        </footer>
+    </div>
+
+</body>
+</html>
